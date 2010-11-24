@@ -16,6 +16,9 @@ module SimpleCaptcha
   mattr_accessor :image_size
   @@image_size = "100x28"
 
+  mattr_accessor :point_size
+  @@point_size = 22
+
   mattr_accessor :length
   @@length = 5
 
