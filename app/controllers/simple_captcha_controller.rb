@@ -1,9 +1,12 @@
 class SimpleCaptchaController < ActionController::Metal
+  include ActionController::Helpers
+  include ActionController::Flash
   include ActionController::Streaming
   include SimpleCaptcha::ImageHelpers
 
   # GET /simple_captcha
   def show
+    flash.keep unless flash.empty?
     unless params[:id].blank?
       send_file(
         generate_simple_captcha_image(params[:id]),
