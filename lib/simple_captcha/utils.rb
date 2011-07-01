@@ -24,6 +24,30 @@ module SimpleCaptcha #:nodoc
       SimpleCaptchaData.get_data(key).value rescue nil
     end
 
+    def self.set_simple_captcha_value(key, options={})
+      code_type = options[:code_type]
+
+      value = generate_value(code_type)
+      data = SimpleCaptcha::SimpleCaptchaData.get_data(key)
+      data.value = value
+      data.save
+      key
+    end
+
+    def self.generate_value(code)
+      value = ''
+
+      case code
+        when 'numeric' then 
+          SimpleCaptcha.length.times{value << (48 + rand(10)).chr}
+        else
+          SimpleCaptcha.length.times{value << (65 + rand(26)).chr}
+      end
+
+      return value
+    end
+
+
     def self.simple_captcha_passed!(key) #:nodoc
       SimpleCaptchaData.remove_data(key)
     end
