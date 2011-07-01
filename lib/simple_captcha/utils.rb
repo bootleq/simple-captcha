@@ -36,12 +36,16 @@ module SimpleCaptcha #:nodoc
 
     def self.generate_value(code)
       value = ''
+      code ||= 'alpha'
 
       case code
-        when 'numeric' then 
+        when 'numeric' then
           SimpleCaptcha.length.times{value << (48 + rand(10)).chr}
-        else
+        when 'alpha' then
           SimpleCaptcha.length.times{value << (65 + rand(26)).chr}
+        else
+          a = code.chars.to_a
+          SimpleCaptcha.length.times{value << (a[rand(a.count)])}
       end
 
       return value
