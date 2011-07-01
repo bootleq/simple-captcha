@@ -59,6 +59,11 @@ module SimpleCaptcha #:nodoc
       def generate_simple_captcha_image(simple_captcha_key) #:nodoc
         amplitude, frequency = ImageHelpers.distortion(SimpleCaptcha.distortion)
         text = Utils::simple_captcha_value(simple_captcha_key)
+        text ||= begin
+          Utils::set_simple_captcha_value(simple_captcha_key)
+          session[:captcha] = simple_captcha_key
+          Utils::simple_captcha_value(simple_captcha_key)
+        end
 
         params = ImageHelpers.image_params(SimpleCaptcha.image_style).dup
         params << "-size #{SimpleCaptcha.image_size}"
