@@ -25,7 +25,7 @@ module SimpleCaptcha #:nodoc
     end
 
     def self.set_simple_captcha_value(key, options={})
-      code_type = options[:code_type]
+      code_type = options[:code_type] || SimpleCaptcha.code_type
 
       value = generate_value(code_type)
       data = SimpleCaptcha::SimpleCaptchaData.get_data(key)
@@ -36,12 +36,12 @@ module SimpleCaptcha #:nodoc
 
     def self.generate_value(code)
       value = ''
-      code ||= 'alpha'
+      code ||= :alpha
 
       case code
-        when 'numeric' then
+        when :numeric then
           SimpleCaptcha.length.times{value << (48 + rand(10)).chr}
-        when 'alpha' then
+        when :alpha then
           SimpleCaptcha.length.times{value << (65 + rand(26)).chr}
         else
           a = code.chars.to_a

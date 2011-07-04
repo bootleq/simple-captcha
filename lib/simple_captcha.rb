@@ -22,6 +22,9 @@ module SimpleCaptcha
   mattr_accessor :length
   @@length = 5
 
+  mattr_accessor :code_type
+  @@code_type = :alpha
+
   # 'embosed_silver',
   # 'simply_red',
   # 'simply_green',
